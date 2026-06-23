@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ytac-models"
+version = "2026.6.23.1"
+description = "Shared SQLAlchemy ORM models for the ytac / altCensored ecosystem"
+requires-python = ">=3.12"
+dependencies = [
+    "sqlalchemy>=2.0",
+    "psycopg2-binary",
+]
+
+[tool.setuptools.packages.find]
+include = ["ytac_models*"]
