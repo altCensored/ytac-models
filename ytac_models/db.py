@@ -51,8 +51,8 @@ class Video(Base):
     view_count_ac = Column(Integer, nullable=True)
     filesize_approx = Column(BigInteger, nullable=True)
 
-    unavailable_date = Column(Date, nullable=True)
-    unavailable_reason = Column(Text, nullable=True)
+    deleted_date = Column(Date, nullable=True)
+    deleted_reason = Column(Text, nullable=True)
 
     live_status = Column(String, nullable=True)
     check_live_last = Column(DateTime(timezone=True), nullable=True)
@@ -68,7 +68,6 @@ class Video(Base):
     added_date = Column(Date, nullable=True)
 
     allow = Column(Boolean, nullable=False, default=True)
-    available = Column(Boolean, nullable=False, default=True)
     limited = Column(Boolean, nullable=False, default=False)
     deleted = Column(Boolean, nullable=False, default=False)
     ac_exists = Column(Boolean, nullable=False, default=False)
@@ -88,7 +87,6 @@ class Video(Base):
     __table_args__ = (
         UniqueConstraint('extractor_key', 'extractor_data', name='uq_video_extractor'),
         Index('ix_video_extractor', 'extractor_key', 'extractor_data'),
-        Index('ix_video_available', 'available'),
         Index('ix_video_published', 'published'),
         Index('ix_video_tags_gin', 'tags', postgresql_using='gin'),
     )
@@ -128,9 +126,8 @@ class Source(Base):
     archive_full_was = Column(Boolean, nullable=False, default=False)
     archive_part_was = Column(Boolean, nullable=False, default=False)
 
-    available = Column(Boolean, nullable=False, default=True)
-    unavailable_date = Column(Date, nullable=True)
     deleted_date = Column(Date, nullable=True)
+    deleted_reason = Column(Text, nullable=True)
     maint_yt_last = Column(Date, nullable=True)
     maint_ia_last = Column(Date, nullable=True)
     maint_ac_last = Column(Date, nullable=True)
@@ -158,7 +155,7 @@ class Source(Base):
 
     @property
     def videos_deleted(self):
-        return len([v for v in self.videos if not v.available])
+        return len([v for v in self.videos if v.deleted])
 
     @property
     def videos_live(self):

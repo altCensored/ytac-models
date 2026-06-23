@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ytac-models"
-version = "2026.6.23.1"
+version = "2026.6.23.2"
 description = "Shared SQLAlchemy ORM models for the ytac / altCensored ecosystem"
 requires-python = ">=3.12"
 dependencies = [
@@ -14,3 +14,17 @@ dependencies = [
 
 [tool.setuptools.packages.find]
 include = ["ytac_models*"]
+
+[tool.bumpversion]
+current_version = "2026.6.23.2"
+parse = "(?P<year>\\d+)\\.(?P<month>\\d+)\\.(?P<day>\\d+)\\.(?P<patch>\\d+)"
+serialize = ["{year}.{month}.{day}.{patch}"]
+commit = true
+tag = true
+tag_name = "v{new_version}"
+commit_args = "--no-verify"
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
