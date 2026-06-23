@@ -101,7 +101,6 @@ class Source(Base):
     extractor_match = Column(String, nullable=False)
     url = Column(String, nullable=False)
 
-    sync_last = Column(DateTime(timezone=True), nullable=True)
     sync_next = Column(DateTime(timezone=True), nullable=True)
     delta = Column(Interval, nullable=False)
 
