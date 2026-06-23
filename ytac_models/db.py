@@ -55,8 +55,6 @@ class Video(Base):
     deleted_reason = Column(Text, nullable=True)
 
     live_status = Column(String, nullable=True)
-    check_live_last = Column(DateTime(timezone=True), nullable=True)
-    live_since = Column(DateTime(timezone=True), nullable=True)
 
     maint_yt_last = Column(Date, nullable=True)
     maint_ia_last = Column(Date, nullable=True)
@@ -127,6 +125,7 @@ class Source(Base):
 
     deleted_date = Column(Date, nullable=True)
     deleted_reason = Column(Text, nullable=True)
+    check_live_last = Column(Date, nullable=True)
     maint_yt_last = Column(Date, nullable=True)
     maint_ia_last = Column(Date, nullable=True)
     maint_ac_last = Column(Date, nullable=True)
