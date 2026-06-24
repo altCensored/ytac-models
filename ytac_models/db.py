@@ -84,9 +84,7 @@ class Video(Base):
 
     __table_args__ = (
         UniqueConstraint('extractor_key', 'extractor_data', name='uq_video_extractor'),
-        Index('ix_video_extractor', 'extractor_key', 'extractor_data'),
         Index('ix_video_published', 'published'),
-        Index('ix_video_tags_gin', 'tags', postgresql_using='gin'),
     )
 
 
@@ -134,7 +132,6 @@ class Source(Base):
 
     __table_args__ = (
         UniqueConstraint('extractor_key', 'extractor_data', name='uq_source_extractor'),
-        Index('ix_source_extractor', 'extractor_key', 'extractor_data'),
         Index('ix_source_extractor_match', 'extractor_key', 'extractor_match'),
         Index('ix_source_sync_next_allow', 'sync_next', 'allow'),
     )
