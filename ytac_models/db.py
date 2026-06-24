@@ -35,7 +35,6 @@ class Video(Base):
     __tablename__ = 'video'
 
     id = Column(Integer, primary_key=True)
-    extractor_key = Column(String, nullable=False)
     extractor_data = Column(String, nullable=False)
 
     title = Column(String, nullable=True)
@@ -83,7 +82,7 @@ class Video(Base):
     sources = relationship('Source', secondary=content_table, back_populates='videos')
 
     __table_args__ = (
-        UniqueConstraint('extractor_key', 'extractor_data', name='uq_video_extractor'),
+        UniqueConstraint('extractor_data', name='uq_video_extractor_data'),
         Index('ix_video_published', 'published'),
     )
 
@@ -92,9 +91,7 @@ class Source(Base):
     __tablename__ = 'source'
 
     id = Column(Integer, primary_key=True)
-    extractor_key = Column(String, nullable=False)
     extractor_data = Column(String, nullable=False)
-    extractor_match = Column(String, nullable=False)
     url = Column(String, nullable=False)
 
     sync_next = Column(DateTime(timezone=True), nullable=True)
@@ -131,8 +128,7 @@ class Source(Base):
     videos = relationship('Video', secondary=content_table, back_populates='sources')
 
     __table_args__ = (
-        UniqueConstraint('extractor_key', 'extractor_data', name='uq_source_extractor'),
-        Index('ix_source_extractor_match', 'extractor_key', 'extractor_match'),
+        UniqueConstraint('extractor_data', name='uq_source_extractor_data'),
         Index('ix_source_sync_next_allow', 'sync_next', 'allow'),
     )
 
